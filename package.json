@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "setup-dbs": "psql -f ./db/setup.sql"
+    "setup-dbs": "psql -f ./db/setup.sql",
+    "test": "jest"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
