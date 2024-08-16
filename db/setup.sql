@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS wildsight_test;
+DROP DATABASE IF EXISTS wildsight;
+
+CREATE DATABASE wildsight_test;
+CREATE DATABASE wildsight;
