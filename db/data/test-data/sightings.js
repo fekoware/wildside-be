@@ -1,6 +1,5 @@
 module.exports = [
   {
-    sighting_id: "s1a2b3c4d",
     user_id: 1,
     uploaded_image: "https://example.com/images/elephant1.jpg",
     sighting_date: "2024-08-15",
@@ -11,8 +10,7 @@ module.exports = [
     wikipedia_url: "https://en.wikipedia.org/wiki/African_elephant",
   },
   {
-    sighting_id: "s5e6f7g8h",
-    user_id: 2,
+    user_id: 2, 
     uploaded_image: "https://example.com/images/tiger1.jpg",
     sighting_date: "2024-07-22",
     long_position: 79.0193,
@@ -22,7 +20,6 @@ module.exports = [
     wikipedia_url: "https://en.wikipedia.org/wiki/Bengal_tiger",
   },
   {
-    sighting_id: "s9i0j1k2l",
     user_id: 3,
     uploaded_image: "https://example.com/images/koala1.jpg",
     sighting_date: "2024-08-01",
@@ -33,7 +30,6 @@ module.exports = [
     wikipedia_url: "https://en.wikipedia.org/wiki/Koala",
   },
   {
-    sighting_id: "m3n4o5p6q",
     user_id: 4,
     uploaded_image: "https://example.com/images/blue_whale1.jpg",
     sighting_date: "2024-06-10",
@@ -44,7 +40,6 @@ module.exports = [
     wikipedia_url: "https://en.wikipedia.org/wiki/Blue_whale",
   },
   {
-    sighting_id: "r7s8t9u0v",
     user_id: 5,
     uploaded_image: "https://example.com/images/panda1.jpg",
     sighting_date: "2024-05-18",
