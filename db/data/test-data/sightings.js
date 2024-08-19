@@ -10,7 +10,7 @@ module.exports = [
     wikipedia_url: "https://en.wikipedia.org/wiki/African_elephant",
   },
   {
-    user_id: 2, 
+    user_id: 2,
     uploaded_image: "https://example.com/images/tiger1.jpg",
     sighting_date: "2024-07-22",
     long_position: 79.0193,
