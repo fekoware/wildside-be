@@ -1,7 +1,6 @@
 const format = require("pg-format");
 const db = require("../connection.js");
 
-
 const seed = ({ sightings, users, favouriteWildlife }) => {
   return (
     db
@@ -72,30 +71,49 @@ function createXFavouriteWildlife() {
 function insertUsers(users) {
   const nestedUsers = users.map((user) => {
     return [user.username, user.password, user.email];
-  })
-  return db.query(format(`INSERT INTO users 
+  });
+  return db.query(
+    format(
+      `INSERT INTO users 
   (username, password, email)
-  VALUES %L RETURNING *`, nestedUsers))
+  VALUES %L RETURNING *`,
+      nestedUsers
+    )
+  );
 }
 
 function insertSightings(sightings) {
   const nestedSightings = sightings.map((sighting) => {
-    return [sighting.user_id, sighting.uploaded_image, sighting.sighting_date, sighting.long_position, sighting.lat_position, sighting.common_name, sighting.taxon_name, sighting.wikipedia_url]
-  })
-  return db.query(format(`INSERT INTO sightings (user_id, uploaded_image, sighting_date, long_position, lat_position, common_name, taxon_name, wikipedia_url)
-  VALUES %L RETURNING *`, nestedSightings))
+    return [
+      sighting.user_id,
+      sighting.uploaded_image,
+      sighting.sighting_date,
+      sighting.long_position,
+      sighting.lat_position,
+      sighting.common_name,
+      sighting.taxon_name,
+      sighting.wikipedia_url,
+    ];
+  });
+  return db.query(
+    format(
+      `INSERT INTO sightings (user_id, uploaded_image, sighting_date, long_position, lat_position, common_name, taxon_name, wikipedia_url)
+  VALUES %L RETURNING *`,
+      nestedSightings
+    )
+  );
 }
 
 function insertXFavouriteWildlife(favouriteWildlife) {
-
   const nestedFavouriteWildlife = favouriteWildlife.map((wildlife) => {
-    return [wildlife.user_id, wildlife.sighting_id]
-  })
-  return db.query(format(`INSERT INTO x_favourite_wildlife (user_id, sighting_id) VALUES %L RETURNING *`, nestedFavouriteWildlife))
+    return [wildlife.user_id, wildlife.sighting_id];
+  });
+  return db.query(
+    format(
+      `INSERT INTO x_favourite_wildlife (user_id, sighting_id) VALUES %L RETURNING *`,
+      nestedFavouriteWildlife
+    )
+  );
 }
 
-
 module.exports = seed;
-
-// my_sightings INT REFERENCES sightings(sighting_id),
-// favourite_wildlife INT REFERENCES favourite_wildlife(wildlife_id)
