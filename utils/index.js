@@ -1,0 +1,1 @@
+exports.checkValidNewSighting = require("./check-valid-new-sighting")
