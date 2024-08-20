@@ -50,7 +50,7 @@ function createSightings() {
     sighting_id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(user_id) NOT NULL,
     uploaded_image VARCHAR(255) NOT NULL,
-    sighting_date DATE NOT NULL, 
+    sighting_date TIMESTAMP DEFAULT NOW(),
     long_position FLOAT NOT NULL,
     lat_position FLOAT NOT NULL,
     common_name VARCHAR(40) NOT NULL,
@@ -87,7 +87,6 @@ function insertSightings(sightings) {
     return [
       sighting.user_id,
       sighting.uploaded_image,
-      sighting.sighting_date,
       sighting.long_position,
       sighting.lat_position,
       sighting.common_name,
@@ -97,7 +96,8 @@ function insertSightings(sightings) {
   });
   return db.query(
     format(
-      `INSERT INTO sightings (user_id, uploaded_image, sighting_date, long_position, lat_position, common_name, taxon_name, wikipedia_url)
+      `INSERT INTO sightings (user_id, uploaded_image, long_position,
+      lat_position, common_name, taxon_name, wikipedia_url)
   VALUES %L RETURNING *`,
       nestedSightings
     )
