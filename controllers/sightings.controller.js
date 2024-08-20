@@ -5,6 +5,7 @@ exports.postSighting = (request, response, next) => {
   postSighting.user_id = request.params.user_id;
 
   insertSighting(postSighting).then((newSighting) => {
-    response.status(201).send({ newSighting });
-  });
-};
+    response.status(201).send({ newSighting })
+  })
+  .catch(next) 
+  }

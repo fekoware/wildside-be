@@ -1,6 +1,19 @@
 const db = require("../db/connection");
+const { checkValidNewSighting } = require("../utils")
 
 exports.insertSighting = (newSighting) => {
+  if (!checkValidNewSighting(newSighting)) {
+    return Promise.reject ({
+      status: 400,
+      message: "Bad request"
+    })
+  }
+  else if (!(newSighting.long_position >= -180 && newSighting.long_position <= 180) || !(newSighting.lat_position >= -90 && newSighting.lat_position <= 90)) {
+    return Promise.reject ({
+      status: 416,
+      message: "Range error of latitude (-90, +90) or longitude (-180, 180)"
+    })
+  }
   return db
     .query(
       `INSERT INTO sightings
