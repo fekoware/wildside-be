@@ -229,4 +229,59 @@ describe("/api/users", () => {
         });
   })
 })
+describe("GET", () => {
+  test("200: Responds with a list of all users", () => {
+    return request(app)
+    .get("/api/users")
+    .expect(200)
+    .then((response) => {
+      expect(response.body.users.length).toBe(5);
+      response.body.users.forEach((user) => {
+        expect(typeof user.username).toBe("string");
+        expect(typeof user.email).toBe("string");
+        expect(user).toHaveProperty("user_id");
+        expect(user).toHaveProperty("username");
+        expect(user).toHaveProperty("email");
+      });
+    });
+  })
+  test("404: Responds with path not found for a non-existent endpoint", () => {
+    return request(app)
+      .get("/api/nonexistent")
+      .expect(404)
+      .then((response) => {
+        expect(response.body.message).toBe("path not found");
+      });
+  });
+  test("200: Users list does not include passwords", () => {
+    return request(app)
+      .get("/api/users")
+      .expect(200)
+      .then((response) => {
+        response.body.users.forEach((user) => {
+          expect(user).not.toHaveProperty("password");
+        });
+      });
+  });
+  test("200: Responds with the user object when the username exists", () => {
+    return request(app)
+      .get("/api/users/plantsarelifee")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.user).toEqual({
+          user_id: expect.any(Number),
+          username: "plantsarelifee",
+          email: "plantsarelifee@gmail.com",
+        });
+      });
+})
+test("404: Responds with 'User not found' when the username does not exist", () => {
+  return request(app)
+    .get("/api/users/nonexistentuser")
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.message).toBe("User not found");
+    });
 });
+})
+})

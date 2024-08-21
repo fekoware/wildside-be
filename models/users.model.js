@@ -57,3 +57,22 @@ exports.insertUser = (newUser) => {
             }
         })
 }
+
+exports.selectUsers = () => {
+    return db.query('SELECT user_id, username, email FROM users;').then((result) => {
+        return result.rows;
+      });
+}
+
+exports.selectUserByUsername = (username) => {
+    return db
+        .query(
+            `SELECT user_id, username, email 
+             FROM users 
+             WHERE username = $1`,
+            [username]
+        )
+        .then(({ rows }) => {
+            return rows[0] || null;
+        });
+};
