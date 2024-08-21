@@ -1,6 +1,9 @@
-const { checkValidNewSighting } = require("../../utils")
+const { checkValidNewSighting, checkUserExists } = require("../../utils")
+const db = require("../../db/connection")
 
-describe.only("Check valid new sighting", () => {
+afterAll(() => db.end());
+
+describe("Check valid new sighting", () => {
     test("Returns a boolean", () => {
         const input = {
             uploaded_image: "https://example.com/images/petal2.jpg"
@@ -78,3 +81,42 @@ describe.only("Check valid new sighting", () => {
         expect(output).toBe(false)
     })
 })
+
+
+describe("Check user exists", () => {
+    test("Resolves to an object", () => {
+        const username = "nature01"
+        const email = "hellonature@gmail.com"
+        return checkUserExists(username, email).then((result) => {
+            expect(typeof result).toBe("object")
+        });
+    })
+    test("Resolves to an object of {username: true} when a username already exists", () => {
+        const username = "ilovetrees"
+        const email = "hellonature@gmail.com"
+        return checkUserExists(username, email).then((result) => {
+            expect(result).toEqual({ username: true });
+        });
+    });
+    test("Resolves to an object of {email: true} when an email already exists", () => {
+        const username = "nature01"
+        const email = "iloveplants@gmail.com"
+        return checkUserExists(username, email).then((result) => {
+            expect(result).toEqual({ email: true });
+        });
+    });
+    test("Resolves to an object of {username: true, email: true} when a username and email already exists", () => {
+        const username = "ilovetrees"
+        const email = "iloveplants@gmail.com"
+        return checkUserExists(username, email).then((result) => {
+            expect(result).toEqual({ username: true, email: true });
+        });
+    });
+    test("Resolves to an empty object when the username and email doesn't already exist", () => {
+        const username = "ilovetrees2"
+        const email = "iloveplants2@gmail.com"
+        return checkUserExists(username, email).then((result) => {
+            expect(result).toEqual({});
+        });
+    });
+});

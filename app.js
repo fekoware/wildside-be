@@ -1,22 +1,16 @@
 const express = require("express");
-const { sightingsRouter } = require("./routes");
+const { sightingsRouter, usersRouter } = require("./routes");
 
 const app = express();
 app.use(express.json());
 
 app.use("/api/sightings", sightingsRouter);
+app.use("/api/users", usersRouter);
 
 app.all('*', (request, response, next) => {
     response.status(404).send({message: 'path not found'})
- })
-
- app.use((error, request, response, next) => {
-    if (error.status && error.message) {
-        response.status(error.status).send({ message: error.message });
-    } else {
-        next(error);
-    }
 })
+
 
 app.use((error, request, response, next) => {
     if (error.code === '22P02') {
@@ -30,7 +24,13 @@ app.use((error, request, response, next) => {
     }
 })
 
-
+app.use((error, request, response, next) => {
+   if (error.status && error.message) {
+       response.status(error.status).send({ message: error.message });
+   } else {
+       next(error);
+   }
+})
 
 
 module.exports = app;
