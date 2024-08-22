@@ -379,7 +379,7 @@ describe("/api/mywildlife/users/:user_id", () => {
         .get("/api/mywildlife/users/1")
         .expect(200)
         .then(({ body }) => {
-          console.log(body);
+          console.log("hello");
 
           expect(body).toEqual({
             wildlife: [
