@@ -4,6 +4,7 @@
     "setup-dbs": "psql -f ./db/setup.sql",
     "test": "jest",
     "start": "node listen.js",
+    "seed": "node ./db/seeds/run-seed.js",
     "seed-prod": "NODE_ENV=production npm run seed"
   },
   "dependencies": {
