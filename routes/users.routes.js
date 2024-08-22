@@ -3,8 +3,16 @@ const {postUser, getUsers, getUserByUsername} = require("../controllers/users.co
 
 const usersRouter = express.Router();
 
-usersRouter.route("/").post(postUser);
-usersRouter.route("/").get(getUsers);
-usersRouter.route('/:username').get(getUserByUsername);
+usersRouter
+.route("/")
+.post(postUser);
+
+usersRouter
+.route("/")
+.get(getUsers);
+
+usersRouter
+.route('/:username')
+.get(getUserByUsername);
 
 module.exports = usersRouter;

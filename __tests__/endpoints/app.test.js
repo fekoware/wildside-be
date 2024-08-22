@@ -9,7 +9,40 @@ beforeEach(() => seed(data));
 
 afterAll(() => db.end());
 
-describe("/api/sightings/:user_id", () => {
+describe("/api/sightings/user/:user_id", () => {
+  describe("GET", () => {
+    test("200: Responds with sightings within the specified latitude/longitude range for a given user", () => {
+      return request(app)
+      .get("/api/sightings/user/1?swlat=-10.0&swlong=30.0&nelat=10.0&nelong=50.0")
+      .expect(200)
+      .then(({ body }) => {
+        body.sightings.forEach((sighting) => {
+          expect(sighting.user_id).toBe(1);
+          expect(sighting.lat_position).toBeGreaterThanOrEqual(-10.0);
+          expect(sighting.lat_position).toBeLessThanOrEqual(10.0);
+          expect(sighting.long_position).toBeGreaterThanOrEqual(30.0);
+          expect(sighting.long_position).toBeLessThanOrEqual(50.0);
+          });
+    })
+  })
+  test("404: Returns No sightings found if no sightings are found within the specified latitude/longitude range", () => {
+    return request(app)
+      .get("/api/sightings/user/1?swlat=-90.0&swlong=-180.0&nelat=-80.0&nelong=-170.0")
+      .expect(404)
+      .then(({ body }) => {
+        const { message } = body;
+        expect(message).toBe("No sightings found for the given user and coordinates")
+      });
+  });
+  test("400: Responds with a 400 error for invalid latitude/longitude values", () => {
+    return request(app)
+      .get("/api/sightings/user/1?swlat=-100.0&swlong=30.0&nelat=10.0&nelong=50.0")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.message).toBe("Invalid latitude/longitude range");
+      });
+  });
+  })
   describe("POST", () => {
     test("201: Adds a sighting by user", () => {
       const newSighting = {
@@ -21,7 +54,7 @@ describe("/api/sightings/:user_id", () => {
         wikipedia_url: "https://en.wikipedia.org/wiki/RosePetal",
       };
       return request(app)
-        .post("/api/sightings/3")
+        .post("/api/sightings/user/3")
         .send(newSighting)
         .expect(201)
         .then(({ body }) => {
@@ -57,7 +90,7 @@ describe("/api/sightings/:user_id", () => {
         wikipedia_url: "https://en.wikipedia.org/wiki/RosePetal",
       };
       return request(app)
-        .post("/api/sightings/300")
+        .post("/api/sightings/user/300")
         .send(newSighting)
         .expect(404)
         .then(({ body }) => {
@@ -75,7 +108,7 @@ describe("/api/sightings/:user_id", () => {
       wikipedia_url: "https://en.wikipedia.org/wiki/RosePetal",
     };
     return request(app)
-      .post("/api/sightings/3")
+      .post("/api/sightings/user/3")
       .send(newSighting)
       .expect(400)
       .then(({ body }) => {
@@ -93,7 +126,7 @@ describe("/api/sightings/:user_id", () => {
       wikipedia_url: "https://en.wikipedia.org/wiki/RosePetal",
     };
     return request(app)
-      .post("/api/sightings/3")
+      .post("/api/sightings/user/3")
       .send(newSighting)
       .expect(400)
       .then(({ body }) => {
@@ -111,7 +144,7 @@ describe("/api/sightings/:user_id", () => {
       wikipedia_url: "https://en.wikipedia.org/wiki/RosePetal",
     };
     return request(app)
-      .post("/api/sightings/3")
+      .post("/api/sightings/user/3")
       .send(newSighting)
       .expect(416)
       .then(({ body }) => {
@@ -285,3 +318,44 @@ test("404: Responds with 'User not found' when the username does not exist", () 
 });
 })
 })
+
+describe("/sighting/:sighting_id", () => {
+  describe("GET", () => {
+  test("200: Responds with a sighting that corresponds with the sighting id", () => {
+    return request(app)
+      .get("/api/sightings/1")
+      .expect(200)
+      .then(({ body }) => {
+        const { sighting } = body;
+        expect(sighting).toEqual({
+          sighting_id: 1,
+          user_id: 1,
+          uploaded_image: "https://example.com/images/elephant1.jpg",
+          sighting_date: expect.any(String),
+          long_position: 34.80746,
+          lat_position: -1.29207,
+          common_name: "African Elephant",
+          taxon_name: "Loxodonta africana",
+          wikipedia_url: "https://en.wikipedia.org/wiki/African_elephant",
+        });
+  })
+})
+test("404: Responds with Sighting not found when sighting_id does not exist", () => {
+  return request(app)
+    .get("/api/sightings/9999")
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.message).toBe("Sighting not found");
+    });
+})
+test("400: Responds with Invalid sighting id when the sighting_id is invalid", () => {
+  return request(app)
+    .get("/api/sightings/notanumber")
+    .expect(400)
+    .then(({ body }) => {
+      expect(body.message).toBe("Invalid sighting id");
+    });
+});
+})
+})
+
