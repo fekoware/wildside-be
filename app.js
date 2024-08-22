@@ -1,13 +1,21 @@
 const express = require("express");
+
+const { sightingsRouter, usersRouter, myWildlifeRouter } = require("./routes");
+
 const { sightingsRouter, usersRouter } = require("./routes");
 const { getEndpoints } = require("./controllers/sightings.controller")
+
 
 const app = express();
 app.use(express.json());
 
 app.use("/api/sightings", sightingsRouter);
 app.use("/api/users", usersRouter);
+
+app.use("/api/mywildlife", myWildlifeRouter );
+
 app.get("/api", getEndpoints)
+
 
 
 app.all('*', (request, response, next) => {
