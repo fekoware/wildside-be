@@ -1,5 +1,7 @@
 const { insertSighting, selectSightingById, selectSightingsByUserAndCoordinates } = require("../models/sightings.model");
 
+const endpoints = require("../endpoints.json")
+
 exports.postSighting = (request, response, next) => {
   const postSighting = request.body;
   postSighting.user_id = request.params.user_id;
@@ -36,3 +38,6 @@ exports.postSighting = (request, response, next) => {
         .catch(next);
     };
     
+   exports.getEndpoints = (request, response, next) => {
+    response.status(200).send({ endpoints });
+    }

@@ -4,6 +4,7 @@ const seed = require("../../db/seeds/seed");
 const data = require("../../db/data");
 const app = require("../../app");
 const Test = require("supertest/lib/test");
+const endpoints = require("../../endpoints.json")
 
 beforeEach(() => seed(data));
 
@@ -359,3 +360,13 @@ test("400: Responds with Invalid sighting id when the sighting_id is invalid", (
 })
 })
 
+describe("GET /api", () => {
+  test("responds with a json detailing all available endpoints", () => {
+    return request(app)
+      .get("/api")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.endpoints).toEqual(endpoints);
+      });
+  });
+});
