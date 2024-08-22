@@ -11,7 +11,6 @@ app.all('*', (request, response, next) => {
     response.status(404).send({message: 'path not found'})
 })
 
-
 app.use((error, request, response, next) => {
     if (error.code === '22P02') {
         response.status(400).send({message: 'invalid id type'})
