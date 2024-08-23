@@ -1,4 +1,8 @@
-const { fetchWildlifeByUserId, insertWildlifeToFavouriteByUserId } = require("../models/favourite-wildlife.model");
+const {
+  fetchWildlifeByUserId,
+  insertWildlifeToFavouriteByUserId,
+  removeWildlifeFromFavouritesByUserId,
+} = require("../models/favourite-wildlife.model");
 
 exports.getWIldlifeByUserId = (request, response, next) => {
   const { user_id } = request.params;
@@ -13,8 +17,21 @@ exports.getWIldlifeByUserId = (request, response, next) => {
 exports.addWildlifeToFavouritesByUserId = (request, response, next) => {
   const { user_id, sighting_id } = request.params;
 
-  insertWildlifeToFavouriteByUserId(user_id, sighting_id).then((favourite) => {
-    console.log(favourite, "in controller")
-    return response.status(201).send({favourite})
-  }).catch(next);
+  insertWildlifeToFavouriteByUserId(user_id, sighting_id)
+    .then((favourite) => {
+      return response.status(201).send({ favourite });
+    })
+    .catch(next);
+};
+
+exports.deleteWildlifeFromFavouritesByUserId = (request, response, next) => {
+  const { user_id, sighting_id } = request.params;
+
+  removeWildlifeFromFavouritesByUserId(user_id, sighting_id)
+    .then((data) => {
+      return response.status(204).send();
+    })
+    .catch((err) => {
+      next(err);
+    });
 };

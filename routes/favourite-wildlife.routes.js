@@ -12,7 +12,7 @@ favouriteWildlifeRouter
   .route("/users/:user_id")
   .get(getWIldlifeByUserId)
   
-favouriteWildlifeRouter.route("/:sighting_id/users/:user_id").post(addWildlifeToFavouritesByUserId);
+favouriteWildlifeRouter.route("/:sighting_id/users/:user_id").post(addWildlifeToFavouritesByUserId).delete(deleteWildlifeFromFavouritesByUserId);
 
 
 

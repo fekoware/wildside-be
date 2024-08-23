@@ -15,11 +15,23 @@ exports.fetchWildlifeByUserId = (user_id) => {
 };
 
 exports.insertWildlifeToFavouriteByUserId = (user_id, sighting_id) => {
+  return db
+    .query(
+      `INSERT into x_favourite_wildlife (user_id, sighting_id) VALUES ($1, $2) RETURNING *`,
+      [user_id, sighting_id]
+    )
+    .then((result) => {
+      return result.rows[0];
+    });
+};
 
-    return db.query(
-        `INSERT into x_favourite_wildlife (user_id, sighting_id) VALUES ($1, $2) RETURNING *`
-    , [user_id, sighting_id]).then((result) => {
-
-        return result.rows[0]
-    })
-}
+exports.removeWildlifeFromFavouritesByUserId = (user_id, sighting_id) => {
+  return db
+    .query(
+      `DELETE FROM  x_favourite_wildlife WHERE user_id = $1 AND sighting_id = $2 RETURNING *`,
+      [user_id, sighting_id]
+    )
+    .then((result) => {
+        return "wildlife sigthing deleted"
+    });
+};
