@@ -383,11 +383,43 @@ describe("/api/mywildlife/users/:user_id", () => {
 
           expect(body).toEqual({
             wildlife: [
-              { sighting_id: 4, unique_id: 1, user_id: 1 },
-              { sighting_id: 1, unique_id: 6, user_id: 1 },
-            ],
+              {
+                sighting_id: 4,
+                user_id: 1,
+                uploaded_image: 'https://example.com/images/blue_whale1.jpg',
+                sighting_date: '2024-06-09T23:00:00.000Z',
+                long_position: -118.2437,
+                lat_position: 34.0522,
+                common_name: 'Blue Whale',
+                taxon_name: 'Balaenoptera musculus',
+                wikipedia_url: 'https://en.wikipedia.org/wiki/Blue_whale',
+                unique_id: 1
+              },
+              {
+                sighting_id: 1,
+                user_id: 1,
+                uploaded_image: 'https://example.com/images/elephant1.jpg',
+                sighting_date: '2024-08-14T23:00:00.000Z',
+                long_position: 34.80746,
+                lat_position: -1.29207,
+                common_name: 'African Elephant',
+                taxon_name: 'Loxodonta africana',
+                wikipedia_url: 'https://en.wikipedia.org/wiki/African_elephant',
+                unique_id: 6
+              }
+            ]
           });
         });
     });
   });
+
+  describe("POST", () => {
+    //adds new sigthing to users favourite sightings list
+    test.only("200:adds new sigthing to users favourite sightings list", () => {
+      return request(app).post("/api/mywildlife/users/:user_id")
+    })
+  })
+  
+
+
 });
