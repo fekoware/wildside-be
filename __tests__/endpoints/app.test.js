@@ -415,6 +415,9 @@ describe("/api/mywildlife/users/:user_id", () => {
     test.only("200: deletes favourite from users favourite wildlife", () => {
       
     })
+  }
+
+)})
 
 describe("GET /api", () => {
   test("responds with a json detailing all available endpoints", () => {
