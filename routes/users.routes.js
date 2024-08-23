@@ -5,10 +5,7 @@ const usersRouter = express.Router();
 
 usersRouter
 .route("/")
-.post(postUser);
-
-usersRouter
-.route("/")
+.post(postUser)
 .get(getUsers);
 
 usersRouter
