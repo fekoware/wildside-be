@@ -1,10 +1,21 @@
-express = require("express")
+express = require("express");
 
-const { getWIldlifeByUserId } = require("../controllers/favourite-wildlife.controller")
+const {
+  getWIldlifeByUserId,
+  addWildlifeToFavouritesByUserId,
+  deleteWildlifeFromFavouritesByUserId
+} = require("../controllers/favourite-wildlife.controller");
 
-const myWildlifeRouter = express.Router()
+const favouriteWildlifeRouter = express.Router();
 
-myWildlifeRouter.route("/users/:user_id").get(getWIldlifeByUserId)
+favouriteWildlifeRouter
+  .route("/users/:user_id")
+  .get(getWIldlifeByUserId)
+  
+favouriteWildlifeRouter.route("/:sighting_id/users/:user_id").post(addWildlifeToFavouritesByUserId);
 
 
-module.exports = myWildlifeRouter
+
+
+
+module.exports = favouriteWildlifeRouter;

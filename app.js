@@ -1,12 +1,12 @@
 const express = require("express");
-const { sightingsRouter, usersRouter, myWildlifeRouter } = require("./routes");
+const { sightingsRouter, usersRouter, favouriteWildlifeRouter } = require("./routes");
 
 const app = express();
 app.use(express.json());
 
 app.use("/api/sightings", sightingsRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/mywildlife", myWildlifeRouter );
+app.use("/api/mywildlife", favouriteWildlifeRouter );
 
 app.all('*', (request, response, next) => {
     response.status(404).send({message: 'path not found'})
