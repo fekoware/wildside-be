@@ -83,5 +83,17 @@
                 }
             ]
         }
+    },
+    "POST /api//users": {
+        "description": "Posts a user following sign up and responds with the posted user excluding the password",
+        "exampleRequest": {
+            "username": "naturelover",
+            "password": "HelloWorld02",
+            "email": "iloveplants@gmail.com"
+        },
+        "exampleResponse": {
+            "username": "naturelover",
+            "email": "iloveplants@gmail.com"
+        }
     }
 }
