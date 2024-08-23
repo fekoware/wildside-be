@@ -1,6 +1,7 @@
 const express = require("express");
 
-const { sightingsRouter, usersRouter, myWildlifeRouter } = require("./routes");
+const { sightingsRouter, usersRouter, favouriteWildlifeRouter } = require("./routes");
+
 
 const { sightingsRouter, usersRouter } = require("./routes");
 const { getEndpoints } = require("./controllers/sightings.controller")
@@ -12,7 +13,9 @@ app.use(express.json());
 app.use("/api/sightings", sightingsRouter);
 app.use("/api/users", usersRouter);
 
-app.use("/api/mywildlife", myWildlifeRouter );
+app.use("/api/mywildlife", favouriteWildlifeRouter );
+
+
 
 app.get("/api", getEndpoints)
 

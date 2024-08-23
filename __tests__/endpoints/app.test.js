@@ -380,38 +380,42 @@ describe("/api/mywildlife/users/:user_id", () => {
         .get("/api/mywildlife/users/1")
         .expect(200)
         .then(({ body }) => {
-          console.log(body);
-
           expect(body).toEqual({
             wildlife: [
               {
                 sighting_id: 4,
                 user_id: 1,
-                uploaded_image: 'https://example.com/images/blue_whale1.jpg',
-                sighting_date: '2024-06-09T23:00:00.000Z',
+                uploaded_image: "https://example.com/images/blue_whale1.jpg",
+                sighting_date: "2024-06-09T23:00:00.000Z",
                 long_position: -118.2437,
                 lat_position: 34.0522,
-                common_name: 'Blue Whale',
-                taxon_name: 'Balaenoptera musculus',
-                wikipedia_url: 'https://en.wikipedia.org/wiki/Blue_whale',
-                unique_id: 1
+                common_name: "Blue Whale",
+                taxon_name: "Balaenoptera musculus",
+                wikipedia_url: "https://en.wikipedia.org/wiki/Blue_whale",
+                unique_id: 1,
               },
               {
                 sighting_id: 1,
                 user_id: 1,
-                uploaded_image: 'https://example.com/images/elephant1.jpg',
-                sighting_date: '2024-08-14T23:00:00.000Z',
+                uploaded_image: "https://example.com/images/elephant1.jpg",
+                sighting_date: "2024-08-14T23:00:00.000Z",
                 long_position: 34.80746,
                 lat_position: -1.29207,
-                common_name: 'African Elephant',
-                taxon_name: 'Loxodonta africana',
-                wikipedia_url: 'https://en.wikipedia.org/wiki/African_elephant',
-                unique_id: 6
-              }
-            ]
+                common_name: "African Elephant",
+                taxon_name: "Loxodonta africana",
+                wikipedia_url: "https://en.wikipedia.org/wiki/African_elephant",
+                unique_id: 6,
+              },
+            ],
           });
         });
     });
+
+    
+    test.only("200: deletes favourite from users favourite wildlife", () => {
+      
+    })
+
 describe("GET /api", () => {
   test("responds with a json detailing all available endpoints", () => {
     return request(app)
@@ -420,15 +424,28 @@ describe("GET /api", () => {
       .then(({ body }) => {
         expect(body.endpoints).toEqual(endpoints);
       });
-  });
 
+  });
+});
+
+describe("/api/mywildlife/:sighting_id/users/:user_id", () => {
   describe("POST", () => {
     //adds new sigthing to users favourite sightings list
-    test.only("200:adds new sigthing to users favourite sightings list", () => {
-      return request(app).post("/api/mywildlife/users/:user_id")
-    })
-  })
-  
+    test.only("201: adds new sigthing to users favourite sightings list", () => {
+      const addSightingtoFavourites = {
+        user_id: 1,
+        sighting_id: 2,
+      };
 
-
+      return request(app)
+        .post("/api/mywildlife/2/users/1")
+        .send(addSightingtoFavourites)
+        .expect(201)
+        .then((response) => {
+          console.log(response.body, "hello")
+          expect(response.body.favourite.user_id).toEqual(1);
+          expect(response.body.favourite.sighting_id).toEqual(2);
+        });
+    });
+  });
 });
