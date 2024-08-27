@@ -333,6 +333,112 @@ describe("/api/users", () => {
   });
 });
 
+describe("/api/users/login", () => {
+  describe("POST", () => {
+    test("200: Responds with {user: {user_id, username, email}} on an existing username and matching password", () => {
+      const loginAttempt = {
+        usernameOrEmail: "plantsarelifee",
+        password: "Wildside9",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(200)
+        .then(({ body }) => {
+          const { user } = body;
+          expect(Object.keys(user)).toHaveLength(3);
+          expect(user.user_id).toBe(5);
+          expect(user.username).toBe("plantsarelifee");
+          expect(user.email).toBe("plantsarelifee@gmail.com");
+        });
+    });
+    test("200: Responds with {user: {user_id, username, email}} on an existing email and matching password", () => {
+      const loginAttempt = {
+        usernameOrEmail: "plantsarelifee@gmail.com",
+        password: "Wildside9",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(200)
+        .then(({ body }) => {
+          const { user } = body;
+          expect(Object.keys(user)).toHaveLength(3);
+          expect(user.user_id).toBe(5);
+          expect(user.username).toBe("plantsarelifee");
+          expect(user.email).toBe("plantsarelifee@gmail.com");
+        });
+    });
+    test("400: Responds with 'Bad request' where the object does not match the format {usernameOrEmail: string, password: string}", () => {
+      const loginAttempt = {
+        username: "plantsarelifee@gmail.com",
+        password: "Wildside9",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message).toBe(
+            "All fields are required (usernameOrEmail, password)"
+          );
+        });
+    });
+    test("400: Responds with 'Bad username or password' on an incorrect username", () => {
+      const loginAttempt = {
+        usernameOrEmail: "HelloWorld",
+        password: "Wildside9",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message).toBe("Bad username or password");
+        });
+    });
+    test("400: Responds with 'Bad email or password' on an incorrect email address", () => {
+      const loginAttempt = {
+        usernameOrEmail: "Hello@world.com",
+        password: "Wildside9",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message).toBe("Bad email or password");
+        });
+    });
+    test("400: Responds with 'Bad username or password' on a correct username but incorrect password", () => {
+      const loginAttempt = {
+        usernameOrEmail: "plantsarelifee",
+        password: "Wildside1000",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message).toBe("Bad username or password");
+        });
+    });
+    test("400: Responds with 'Bad email or password' on a correct email but incorrect password", () => {
+      const loginAttempt = {
+        usernameOrEmail: "plantsarelifee@gmail.com",
+        password: "Wildside1000",
+      };
+      return request(app)
+        .post("/api/users/login")
+        .send(loginAttempt)
+        .expect(400)
+        .then(({ body }) => {
+          expect(body.message).toBe("Bad email or password");
+        });
+    });
+  });
+});
+
 describe("/sighting/:sighting_id", () => {
   describe("GET", () => {
     test("200: Responds with a sighting that corresponds with the sighting id", () => {
@@ -376,15 +482,14 @@ describe("/sighting/:sighting_id", () => {
 describe("/api/mywildlife/users/:user_id", () => {
   describe("GET", () => {
     //responds with a list of sightings favourited by user
-    test.only("200: responds with a list of sightings favourited by user id", () => {
+    test("200: responds with a list of sightings favourited by user id", () => {
       return request(app)
         .get("/api/mywildlife/users/1")
         .expect(200)
         .then(({ body }) => {
           body.wildlife.forEach((fav) => {
-            expect(fav.user_id).toEqual(1)
-          })
-
+            expect(fav.user_id).toEqual(1);
+          });
         });
     });
   });
@@ -404,7 +509,7 @@ describe("GET /api", () => {
 describe("/api/mywildlife/:sighting_id/users/:user_id", () => {
   describe("POST", () => {
     //adds new sigthing to users favourite sightings list
-    test.only("201: adds new sigthing to users favourite sightings list", () => {
+    test("201: adds new sigthing to users favourite sightings list", () => {
       const addSightingtoFavourites = {
         user_id: 1,
         sighting_id: 2,
@@ -423,10 +528,8 @@ describe("/api/mywildlife/:sighting_id/users/:user_id", () => {
 
   describe("DELETE", () => {
     //removes a favourited wildlife from the users favourite wildlife list
-  test.only("200:removes a favourited wildlife from the users favourite wildlife list", () => {
-  
-
-    return request(app).delete("/api/mywildlife/1/users/1").expect(204)
-  })
+    test("200:removes a favourited wildlife from the users favourite wildlife list", () => {
+      return request(app).delete("/api/mywildlife/1/users/1").expect(204);
+    });
   });
 });

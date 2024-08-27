@@ -1,15 +1,24 @@
 const express = require("express");
-const {postUser, getUsers, getUserByUsername} = require("../controllers/users.controller")
+const {
+  postUser,
+  getUsers,
+  getUserByUsername,
+  postLoginAttempt,
+} = require("../controllers/users.controller");
 
 const usersRouter = express.Router();
 
 usersRouter
-.route("/")
-.post(postUser)
-.get(getUsers);
+    .route("/")
+    .get(getUsers)
+    .post(postUser);
 
 usersRouter
-.route('/:username')
-.get(getUserByUsername);
+    .route("/:username")
+    .get(getUserByUsername);
+
+usersRouter
+    .route("/login")
+    .post(postLoginAttempt);
 
 module.exports = usersRouter;
