@@ -54,7 +54,7 @@ function createSightings() {
     lat_position FLOAT NOT NULL,
     common_name VARCHAR(40) NOT NULL,
     taxon_name VARCHAR(100) NOT NULL,
-    wikipedia_url VARCHAR(255)
+    wikipedia_url VARCHAR(1000)
     )`);
 }
 
