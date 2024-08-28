@@ -36,11 +36,10 @@ const seed = ({ sightings, users, favouriteWildlife }) => {
 };
 
 function createUsers() {
-	// -----Password ticket raised https://trello.com/c/XsiShEew/68-password-security-spike-------
 	return db.query(`CREATE TABLE users (
         user_id SERIAL PRIMARY KEY,
         username VARCHAR(40) NOT NULL,
-        password VARCHAR(40) NOT NULL,
+        password VARCHAR(65) NOT NULL,
         email VARCHAR(100) NOT NULL
         )`);
 }
