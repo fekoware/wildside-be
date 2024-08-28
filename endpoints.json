@@ -1,99 +1,109 @@
 {
-    "GET /api": {
-        "description": "serves up a json representation of all the available endpoints of the api"
-    },
-    "GET /api/sightings/:sighting_id": {
-        "description": "serves an object of the sighting that corresponds with the sighting_id",
-        "queries": [],
-        "exampleResponse": {
-            "sighting_id": 1,
-            "user_id": 1,
-            "uploaded_image": "https://example.com/images/elephant1.jpg",
-            "sighting_date": "2024-08-22T11:13:25.661Z",
-            "long_position": 34.80746,
-            "lat_position": -1.29207,
-            "common_name": "African Elephant",
-            "taxon_name": "Loxodonta africana",
-            "wikipedia_url": "https://en.wikipedia.org/wiki/African_elephant"
-        }
-    },
-    "GET /api/sightings/user/:user_id": {
-        "description": "serves an object of the sighting that corresponds with the user id",
-        "queries": [
-            "swlat",
-            "swlong",
-            "nelat",
-            "nelong"
-        ],
-        "exampleResponse": {
-            "sighting_id": 1,
-            "user_id": 1,
-            "uploaded_image": "https://example.com/images/elephant1.jpg",
-            "sighting_date": "2024-08-22T11:13:25.661Z",
-            "long_position": 34.80746,
-            "lat_position": -1.29207,
-            "common_name": "African Elephant",
-            "taxon_name": "Loxodonta africana",
-            "wikipedia_url": "https://en.wikipedia.org/wiki/African_elephant"
-        }
-    },
-    "POST /api/sightings/user/:user_id": {
-        "description": "Posts a sighting for a particular user",
-        "exampleRequest": {
-            "uploaded_image": "https://example.com/images/petal2.jpg",
-            "long_position": 44.89763,
-            "lat_position": -11.15632,
-            "common_name": "Rose Petal",
-            "taxon_name": "Roseus Thorneus",
-            " wikipedia_url": "https://en.wikipedia.org/wiki/RosePetal"
-        },
-        "exampleResponse": {
-            "sighting_id": 1,
-            "user_id": 1,
-            "uploaded_image": "https://example.com/images/petal2.jpg",
-            "long_position": 44.89763,
-            "lat_position": -11.15632,
-            "common_name": "Rose Petal",
-            "taxon_name": "Roseus Thorneus",
-            " wikipedia_url": "https://en.wikipedia.org/wiki/RosePetal"
-        }
-    },
-    "GET /api/users": {
-        "description": "serves an array of all users without their passwords",
-        "queries": [],
-        "exampleResponse": { "users": [
-            {
-                "username": "gonna-find-all-the-plants",
-                "email": "iloveplants@gmail.com"
-            },
-            {
-                "username": "plantsarelifee",
-                "email": "plantsarelifee@gmail.com"
-            }
-        ]
+  "GET /api": {
+    "description": "serves up a json representation of all the available endpoints of the api"
+  },
+  "GET /api/sightings/:sighting_id": {
+    "description": "serves an object of the sighting that corresponds with the sighting_id",
+    "queries": [],
+    "exampleResponse": {
+      "sighting_id": 1,
+      "user_id": 1,
+      "uploaded_image": "https://example.com/images/elephant1.jpg",
+      "sighting_date": "2024-08-22T11:13:25.661Z",
+      "long_position": 34.80746,
+      "lat_position": -1.29207,
+      "common_name": "African Elephant",
+      "taxon_name": "Loxodonta africana",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/African_elephant"
     }
-    },
-    "GET /api/users/:username": {
-        "description": "serves a user that corresponds with the username ",
-        "exampleResponse": {
-            "user": [
-                {
-                    "username": "plantsarelifee",
-                    "email": "plantsarelifee@gmail.com"
-                }
-            ]
-        }
-    },
-    "POST /api//users": {
-        "description": "Posts a user following sign up and responds with the posted user excluding the password",
-        "exampleRequest": {
-            "username": "naturelover",
-            "password": "HelloWorld02",
-            "email": "iloveplants@gmail.com"
-        },
-        "exampleResponse": {
-            "username": "naturelover",
-            "email": "iloveplants@gmail.com"
-        }
+  },
+  "GET /api/sightings/user/:user_id": {
+    "description": "serves an object of the sighting that corresponds with the user id",
+    "queries": ["swlat", "swlong", "nelat", "nelong"],
+    "exampleResponse": {
+      "sighting_id": 1,
+      "user_id": 1,
+      "uploaded_image": "https://example.com/images/elephant1.jpg",
+      "sighting_date": "2024-08-22T11:13:25.661Z",
+      "long_position": 34.80746,
+      "lat_position": -1.29207,
+      "common_name": "African Elephant",
+      "taxon_name": "Loxodonta africana",
+      "wikipedia_url": "https://en.wikipedia.org/wiki/African_elephant"
     }
+  },
+  "POST /api/sightings/user/:user_id": {
+    "description": "Posts a sighting for a particular user",
+    "exampleRequest": {
+      "uploaded_image": "https://example.com/images/petal2.jpg",
+      "long_position": 44.89763,
+      "lat_position": -11.15632,
+      "common_name": "Rose Petal",
+      "taxon_name": "Roseus Thorneus",
+      " wikipedia_url": "https://en.wikipedia.org/wiki/RosePetal"
+    },
+    "exampleResponse": {
+      "sighting_id": 1,
+      "user_id": 1,
+      "uploaded_image": "https://example.com/images/petal2.jpg",
+      "long_position": 44.89763,
+      "lat_position": -11.15632,
+      "common_name": "Rose Petal",
+      "taxon_name": "Roseus Thorneus",
+      " wikipedia_url": "https://en.wikipedia.org/wiki/RosePetal"
+    }
+  },
+  "GET /api/users": {
+    "description": "serves an array of all users without their passwords",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "gonna-find-all-the-plants",
+          "email": "iloveplants@gmail.com"
+        },
+        {
+          "username": "plantsarelifee",
+          "email": "plantsarelifee@gmail.com"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "serves a user that corresponds with the username ",
+    "exampleResponse": {
+      "user": [
+        {
+          "username": "plantsarelifee",
+          "email": "plantsarelifee@gmail.com"
+        }
+      ]
+    }
+  },
+  "POST /api/users": {
+    "description": "Posts a user following sign up and responds with the posted user excluding the password",
+    "exampleRequest": {
+      "username": "naturelover",
+      "password": "HelloWorld02",
+      "email": "iloveplants@gmail.com"
+    },
+    "exampleResponse": {
+      "username": "naturelover",
+      "email": "iloveplants@gmail.com"
+    }
+  },
+  "POST /api/users/login": {
+    "description": "Attempts to log a user in by username or email, responds with the user information upon success or and obscured error message on failure.",
+    "exampleRequest": {
+      "usernameOrEmail": "naturelover",
+      "password": "HelloWorld02"
+    },
+    "exampleResponse": {
+      "user": {
+        "user_id": 4,
+        "username": "naturelover",
+        "email": "iloveplants@gmail.com"
+      }
+    }
+  }
 }
